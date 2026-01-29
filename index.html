@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You 💘</title>
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: background 0.6s ease;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hearts {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+.heart {
+  position: absolute;
+  animation: floatUp 10s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(100vh); opacity: 0; }
+  10% { opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
+
+.card {
+  background: rgba(255,255,255,0.95); /* slightly transparent so background shows */
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 450px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  position: relative;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.question, .section {
+  display: none;
+}
+
+.active {
+  display: block;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+button {
+  margin-top: 15px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: none;
+  background: #ff5f8a;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+button:hover {
+  background: #ff3f73;
+  transform: scale(1.03);
+}
+
+.menu button {
+  width: 100%;
+}
+
+#homeBtn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: none;
+  border: none;
+  color: #ff5f8a;
+  font-size: 14px;
+  cursor: pointer;
+  display: none;
+}
+
+.answers { display: none; }
+</style>
+</head>
+
+<body>
+
+<div class="hearts" id="hearts"></div>
+
+<div class="card">
+<button id="homeBtn" onclick="goHome()">← GO BACK</button>
+
+<h1>Valentine’s Quiz 💘</h1>
+
+<div class="question active">
+  <p>Where did we first stay up way too late talking?</p>
+  <input id="a1">
+  <button onclick="next(1)">Next 💕</button>
+</div>
+
+<div class="question">
+  <p>What’s my favorite thing you do without realizing?</p>
+  <input id="a2">
+  <button onclick="next(2)">Next 💕</button>
+</div>
+
+<div class="question">
+  <p>When will I steal you forever?</p>
+  <input id="a3">
+  <button onclick="finish()">Submit 💖</button>
+</div>
+
+<div id="end" class="section">
+  <h2>Congrats, you passed 💘</h2>
+  <p>Prize: unlimited love + me forever 🤍</p>
+
+  <div class="menu">
+    <button onclick="show('pics')">📸 Pictures</button>
+    <button onclick="show('letter')">💌 Love Letter</button>
+    <button onclick="show('voice')">🎧 When You Miss Me</button>
+    <button onclick="show('future')">🔮 Our Future</button>
+  </div>
+
+  <div class="answers">
+    <span id="ans1"></span>
+    <span id="ans2"></span>
+    <span id="ans3"></span>
+  </div>
+</div>
+
+<div id="pics" class="section">
+  <h2>Moments I Hold Onto 📸</h2>
+  <p>Add pictures here 💕</p>
+</div>
+
+<div id="letter" class="section">
+  <h2>A Letter for You 💌</h2>
+  <p id="typedLetter"></p>
+</div>
+
+<div id="voice" class="section">
+  <h2>When You Miss Me 🎧</h2>
+  <p>Add a voice note or song 🎶</p>
+</div>
+
+<div id="future" class="section">
+  <h2>Our Future 🔮</h2>
+  <p>
+    One day no screens. Just us.
+    And yeah… I’m not going anywhere.
+  </p>
+</div>
+
+</div>
+
+<script>
+// 💖 CUSTOM BACKGROUNDS (can be URLs or local files)
+const backgrounds = {
+  quiz: "url('images/quiz.jpg') no-repeat center center/cover",     // local file example
+  home: "url('images/congrats.jpg') no-repeat center center/cover",
+  pics: "url('images/pics.jpg') no-repeat center center/cover",
+  letter: "url('images/letter.jpg') no-repeat center center/cover",
+  voice: "url('images/voice.jpg') no-repeat center center/cover",
+  future: "url('images/future.jpg') no-repeat center center/cover"
+};
+
+// set default quiz background
+document.body.style.background = backgrounds.quiz;
+
+let current = 0;
+const questions = document.querySelectorAll('.question');
+const homeBtn = document.getElementById('homeBtn');
+
+function next(n) {
+  if (!document.getElementById(`a${n}`).value.trim()) {
+    alert("you gotta answer this one 💕");
+    return;
+  }
+  questions[current].classList.remove('active');
+  current++;
+  questions[current].classList.add('active');
+}
+
+function finish() {
+  if (!a3.value.trim()) return alert("don’t skip this 😌");
+
+  questions[current].classList.remove('active');
+  end.classList.add('active');
+  homeBtn.style.display = 'block';
+  document.body.style.background = backgrounds.home;
+
+  const answers = { q1:a1.value, q2:a2.value, q3:a3.value };
+  localStorage.setItem("valentineAnswers", JSON.stringify(answers));
+  console.log("Her answers 💘", answers);
+}
+
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.body.style.background = backgrounds[id];
+
+  if (id === "letter") startTyping();
+}
+
+function goHome() {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  end.classList.add('active');
+  document.body.style.background = backgrounds.home;
+}
+
+// ⌨️ TYPEWRITER LETTER (human)
+const letterText = 
+"My love,\n\nI don’t even know where to start honestly…\n" +
+"I tried writing this like three times.\n\n" +
+"But I just want you to know that even on the hard days—\n" +
+"especially those—I choose you.\n\n" +
+"I mean… I always do.\n\n" +
+"And one day, we’ll laugh about the distance.\n" +
+"Until then, it’s you. Always.\n\n🤍";
+
+let i = 0;
+function startTyping() {
+  const el = document.getElementById("typedLetter");
+  el.innerHTML = "";
+  i = 0;
+  const interval = setInterval(() => {
+    el.innerHTML += letterText.charAt(i);
+    i++;
+    if (i >= letterText.length) clearInterval(interval);
+  }, 40);
+}
+
+// 💖 HEARTS
+const hearts = document.getElementById("hearts");
+for (let i = 0; i < 30; i++) {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = "💖";
+  h.style.left = Math.random()*100 + "vw";
+  h.style.fontSize = 16 + Math.random()*20 + "px";
+  h.style.animationDuration = 6 + Math.random()*6 + "s";
+  hearts.appendChild(h);
+}
+</script>
+
+</body>
+</html>
