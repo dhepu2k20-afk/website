@@ -19,32 +19,25 @@ body {
   background-repeat: no-repeat;
 }
 
-/* 👀 WATCHER */
 .watcher {
   position: fixed;
-  top: 15px;
-  right: 15px;
-  text-align: center;
-  z-index: 10;
-  font-size: 18px;
-  color: black;
-  font-weight: bold;
   pointer-events: none;
-  width: 12vw;
+  z-index: 10;
+  font-size: 11px;
+  color: black; /* as you wanted black bold text */
+  font-weight: 900;
+  text-align: center;
   user-select: none;
 }
-
 .watcher img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
+  width: 100px;  /* bigger size */
+  height: 60px;  /* rectangle shape */
+  object-fit: cover;
+  border-radius: 12px; /* slightly rounded corners */
   border: 2px solid #ff5f8a;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   display: block;
-  margin-bottom: 5px;
-  /* We'll move the image inside this container */
-  transition: transform 0.1s ease-out;
-  will-change: transform;
+  margin: 0 auto 3px;
 }
 
 
@@ -326,30 +319,21 @@ for (let i = 0; i < 30; i++) {
 }
 
   const watcher = document.querySelector('.watcher');
-const watcherImg = document.querySelector('.watcher img');
 
 window.addEventListener('mousemove', (e) => {
-  // Get watcher container position and size
-  const rect = watcher.getBoundingClientRect();
+  // Position the watcher div near the cursor with some offset
+  const offsetX = 20; // pixels to the right of cursor
+  const offsetY = 20; // pixels below cursor
 
-  // Calculate cursor position relative to watcher container center
-  const offsetX = e.clientX - (rect.left + rect.width / 2);
-  const offsetY = e.clientY - (rect.top + rect.height / 2);
-
-  // Limit the max movement so eyes don't go crazy
-  const maxMove = 15; // pixels max movement in any direction
-
-  // Calculate movement with clamp
-  const moveX = Math.max(Math.min(offsetX / 10, maxMove), -maxMove);
-  const moveY = Math.max(Math.min(offsetY / 10, maxMove), -maxMove);
-
-  // Apply transform to image to "follow" cursor
-  watcherImg.style.transform = `translate(${moveX}px, ${moveY}px)`;
+  watcher.style.left = (e.clientX + offsetX) + 'px';
+  watcher.style.top = (e.clientY + offsetY) + 'px';
 });
+
 
 </script>
   
 </body>
 </html>
+
 
 
