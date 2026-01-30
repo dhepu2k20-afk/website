@@ -19,6 +19,30 @@ body {
   background-repeat: no-repeat;
 }
 
+/* 👀 WATCHER */
+.watcher {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  text-align: center;
+  z-index: 10;
+  font-size: 11px;
+  color: #ff5f8a;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+.watcher img {
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ff5f8a;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  display: block;
+  margin: 0 auto 3px;
+}
+
 .hearts {
   position: fixed;
   inset: 0;
@@ -38,7 +62,7 @@ body {
 }
 
 .card {
-  background: rgba(255,255,255,0.95); /* slightly transparent so background shows */
+  background: rgba(255,255,255,0.95);
   padding: 30px;
   border-radius: 20px;
   width: 90%;
@@ -54,13 +78,8 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-.question, .section {
-  display: none;
-}
-
-.active {
-  display: block;
-}
+.question, .section { display: none; }
+.active { display: block; }
 
 input {
   width: 100%;
@@ -78,17 +97,9 @@ button {
   background: #ff5f8a;
   color: white;
   cursor: pointer;
-  transition: transform 0.1s ease;
 }
 
-button:hover {
-  background: #ff3f73;
-  transform: scale(1.03);
-}
-
-.menu button {
-  width: 100%;
-}
+.menu button { width: 100%; }
 
 #homeBtn {
   position: absolute;
@@ -103,10 +114,43 @@ button:hover {
 }
 
 .answers { display: none; }
+
+/* 📸 SLIDER */
+.slider { position: relative; margin-top: 15px; }
+
+.slider img {
+  width: 100%;
+  border-radius: 18px;
+  height: 260px;
+  object-fit: cover;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,95,138,0.85);
+  border: none;
+  color: white;
+  font-size: 22px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.arrow.left { left: -10px; }
+.arrow.right { right: -10px; }
 </style>
 </head>
 
 <body>
+
+<!-- 👀 WATCHING YOU -->
+<div class="watcher">
+  <img src="images/eyes.png">
+  IM WATCHINGG YOUU
+</div>
 
 <div class="hearts" id="hearts"></div>
 
@@ -134,26 +178,23 @@ button:hover {
 </div>
 
 <div id="end" class="section">
-  <h2>Congrats, you passed 💘</h2>
+  <h2>YAYAYAYAYAYAY, YOUUU PASSSS 💘</h2>
   <p>Prize: MEEEE FORVERRR 🥰🥰🥰</p>
 
   <div class="menu">
     <button onclick="show('pics')">📸 Picesss</button>
     <button onclick="show('letter')">💌 Letterrr</button>
-    <button onclick="show('voice')">🎧 When You Miss Me</button>
     <button onclick="show('future')">🔮 Our Future</button>
-  </div>
-
-  <div class="answers">
-    <span id="ans1"></span>
-    <span id="ans2"></span>
-    <span id="ans3"></span>
   </div>
 </div>
 
 <div id="pics" class="section">
   <h2>Moments I Hold Onto 📸</h2>
-  <p>Add pictures here 💕</p>
+  <div class="slider">
+    <button class="arrow left" onclick="prevPic()">‹</button>
+    <img id="slideImg" src="images/pic1.jpg">
+    <button class="arrow right" onclick="nextPic()">›</button>
+  </div>
 </div>
 
 <div id="letter" class="section">
@@ -161,67 +202,45 @@ button:hover {
   <p id="typedLetter"></p>
 </div>
 
-<div id="voice" class="section">
-  <h2>When You Miss Me 🎧</h2>
-  <p>Add a voice note or song 🎶</p>
-</div>
-
 <div id="future" class="section">
   <h2>Our Future 🔮</h2>
-  <p>
-    One day no screens. Just us.
-    And yeah… I’m not going anywhere.
-  </p>
+  <p>One day no screens. Just us. And yeah… I’m not going anywhere.</p>
 </div>
 
 </div>
 
 <script>
-// 💖 CUSTOM BACKGROUNDS (can be URLs or local files)
 const backgrounds = {
-  quiz: "url('images/quiz.jpg') no-repeat center center/cover",     // local file example
-  home: "url('images/congrats.jpg') no-repeat center center/cover",
-  pics: "url('images/pics.jpg') no-repeat center center/cover",
-  letter: "url('images/letter.jpg') no-repeat center center/cover",
-  voice: "url('images/voice.jpg') no-repeat center center/cover",
-  future: "url('images/future.jpg') no-repeat center center/cover"
+  quiz: "url('images/quiz.jpg') center/cover",
+  home: "url('images/congrats.jpg') center/cover",
+  pics: "url('images/pics.jpg') center/cover",
+  letter: "url('images/letter.jpg') center/cover",
+  future: "url('images/future.jpg') center/cover"
 };
 
-// set default quiz background
 document.body.style.background = backgrounds.quiz;
 
 let current = 0;
 const questions = document.querySelectorAll('.question');
-const homeBtn = document.getElementById('homeBtn');
 
 function next(n) {
-  if (!document.getElementById(`a${n}`).value.trim()) {
-    alert("you gotta answer this one 💕");
-    return;
-  }
+  if (!document.getElementById(`a${n}`).value.trim()) return alert("answer it 😌");
   questions[current].classList.remove('active');
   current++;
   questions[current].classList.add('active');
 }
 
 function finish() {
-  if (!a3.value.trim()) return alert("don’t skip this 😌");
-
   questions[current].classList.remove('active');
   end.classList.add('active');
   homeBtn.style.display = 'block';
   document.body.style.background = backgrounds.home;
-
-  const answers = { q1:a1.value, q2:a2.value, q3:a3.value };
-  localStorage.setItem("valentineAnswers", JSON.stringify(answers));
-  console.log("Her answers 💘", answers);
 }
 
 function show(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.body.style.background = backgrounds[id];
-
   if (id === "letter") startTyping();
 }
 
@@ -231,15 +250,28 @@ function goHome() {
   document.body.style.background = backgrounds.home;
 }
 
-// ⌨️ TYPEWRITER LETTER (human)
-const letterText = 
-"My love,\n\nI don’t even know where to start honestly…\n" +
-"I tried writing this like three times.\n\n" +
-"But I just want you to know that even on the hard days—\n" +
-"especially those—I choose you.\n\n" +
-"I mean… I always do.\n\n" +
-"And one day, we’ll laugh about the distance.\n" +
-"Until then, it’s you. Always.\n\n🤍";
+const pics = [
+  "images/pic1.jpg",
+  "images/pic2.jpg",
+  "images/pic3.jpg",
+  "images/pic4.jpg"
+];
+
+let picIndex = 0;
+const slideImg = document.getElementById("slideImg");
+
+function nextPic() {
+  picIndex = (picIndex + 1) % pics.length;
+  slideImg.src = pics[picIndex];
+}
+
+function prevPic() {
+  picIndex = (picIndex - 1 + pics.length) % pics.length;
+  slideImg.src = pics[picIndex];
+}
+
+const letterText =
+"My love,\n\nI choose you. Always.\n\n🤍";
 
 let i = 0;
 function startTyping() {
@@ -247,13 +279,11 @@ function startTyping() {
   el.innerHTML = "";
   i = 0;
   const interval = setInterval(() => {
-    el.innerHTML += letterText.charAt(i);
-    i++;
+    el.innerHTML += letterText.charAt(i++);
     if (i >= letterText.length) clearInterval(interval);
   }, 40);
 }
 
-// 💖 HEARTS
 const hearts = document.getElementById("hearts");
 for (let i = 0; i < 30; i++) {
   const h = document.createElement("div");
@@ -268,4 +298,3 @@ for (let i = 0; i < 30; i++) {
 
 </body>
 </html>
-
