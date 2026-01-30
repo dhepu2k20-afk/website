@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For myyy beautifulll princesss 💘</title>
+<title>I LOVEEE YOUUU💝💝💝</title>
 
 <style>
 body {
@@ -113,8 +113,6 @@ button {
   display: none;
 }
 
-.answers { display: none; }
-
 /* 📸 SLIDER */
 .slider { position: relative; margin-top: 15px; }
 
@@ -148,7 +146,7 @@ button {
 
 <!-- 👀 WATCHING YOU -->
 <div class="watcher">
-  <img src="images/eyes.png">
+  <img id="watcherImg">
   IM WATCHINGG YOUU
 </div>
 
@@ -160,7 +158,7 @@ button {
 <h1>Happyyy Valentinesss Dayyyy 💘</h1>
 
 <div class="question active">
-  <p>When did I say I loved youuu?</p>
+  <p>What was the date of the day I said I loved youuu?</p>
   <input id="a1">
   <button onclick="next(1)">Next 💕</button>
 </div>
@@ -189,24 +187,29 @@ button {
 </div>
 
 <div id="pics" class="section">
-  <h2>Moments I Hold Onto 📸</h2>
+  <h2>CUTEEE PICIES OF YOUUU 📸</h2>
   <div class="slider">
     <button class="arrow left" onclick="prevPic()">‹</button>
-    <img id="slideImg" src="images/pic1.jpg">
+    <img id="slideImg">
     <button class="arrow right" onclick="nextPic()">›</button>
   </div>
 </div>
 
 <div id="letter" class="section">
-  <h2>A Letter for You 💌</h2>
+  <h2>A letter me writeee💌</h2>
   <p id="typedLetter"></p>
 </div>
 
 <div id="future" class="section">
-  <h2>Our Future 🔮</h2>
-  <p>One day no screens. Just us. And yeah… I’m not going anywhere.</p>
-</div>
-
+  <h2>Da Futureee ✨</h2>
+  <p>
+    <p>
+    One day its gonna be just me and you no more screens just face to face maybe with kids. 
+    I cant wait for the all the times we gonna spend together.
+    I will always be by your side now and forver. <3
+  </p>
+</div>.
+  </p>
 </div>
 
 <script>
@@ -219,6 +222,9 @@ const backgrounds = {
 };
 
 document.body.style.background = backgrounds.quiz;
+
+// Load watcher eyes automatically
+document.getElementById("watcherImg").src = "images/eyes.png";
 
 let current = 0;
 const questions = document.querySelectorAll('.question');
@@ -250,15 +256,15 @@ function goHome() {
   document.body.style.background = backgrounds.home;
 }
 
-const pics = [
-  "images/pic1.jpg",
-  "images/pic2.jpg",
-  "images/pic3.jpg",
-  "images/pic4.jpg"
-];
+// Load slider images automatically from folder (pic1.jpg → pic4.jpg)
+const pics = [];
+for (let i = 1; i <= 4; i++) {
+  pics.push(`images/pic${i}.jpg`);
+}
 
 let picIndex = 0;
 const slideImg = document.getElementById("slideImg");
+slideImg.src = pics[picIndex];
 
 function nextPic() {
   picIndex = (picIndex + 1) % pics.length;
@@ -271,7 +277,19 @@ function prevPic() {
 }
 
 const letterText =
-"My love,\n\nI choose you. Always.\n\n🤍";
+"Haiiiiiiii princessssss,\n\n" +
+"hehehehehehe me righttt thiss readdddd ittt pweaseeeeee\n" +
+"TBH  i tried writting this for 3 times trying to make it perfect.\n\n" +
+"But... i dont think im gonna make it as perfect as you are.\n\n" +
+"You make my life shine 100 times better even when im low or having hard times you are there for me\n\n" +
+"I just love seeing you happy if your happy im happy.\n\n" +
+"I promise to be there for you all the time through adventures through silly times and even the hard and tuff ones. \n" +
+"Because you are my love, my home, my princess, my wife, my darling, my mommy, my baby, my everything and my life.\n\n" +
+"So im gonna be with u chooing u everday and forver. \n" +
+"Thank you for everything you have done for me i promise to be with you always and forever.\n\n" +
+"Happy Valentines dayy my princesss.\n" +
+"I LOVEEE YOUU SOOO MUCHHHH 💖";
+
 
 let i = 0;
 function startTyping() {
@@ -284,6 +302,7 @@ function startTyping() {
   }, 40);
 }
 
+// Hearts 💖
 const hearts = document.getElementById("hearts");
 for (let i = 0; i < 30; i++) {
   const h = document.createElement("div");
