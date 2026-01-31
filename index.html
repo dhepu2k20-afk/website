@@ -40,6 +40,37 @@ body {
   margin: 0 auto 3px;
 }
 
+  .laptopPic {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+/* 💥 LOVE TAKEOVER */
+#loveTakeover {
+  position: fixed;
+  inset: 0;
+  background: pink;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#loveTakeover h1 {
+  font-size: 4rem;
+  color: white;
+  text-align: center;
+  animation: pop 0.6s ease infinite alternate;
+}
+
+@keyframes pop {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+
+  
 .introPic {
   width: 100%;
   border-radius: 18px;
@@ -118,6 +149,24 @@ button {
   cursor: pointer;
   display: none;
 }
+<!-- 🔐 PASSWORD PAGE -->
+<div id="extraPass" class="section">
+  <h2>Enter the password 😏</h2>
+  <input id="extraInput" placeholder="password..." type="password">
+  <button onclick="checkExtra()">Unlock 💗</button>
+  <p id="extraError" style="color:red;"></p>
+</div>
+
+<!-- 💻 SECRET IMAGE PAGE -->
+<div id="extraSecret" class="section">
+  <img src="images/extra.jpg" class="laptopPic">
+  <button onclick="loveTakeover()">Next 💖</button>
+</div>
+
+<!-- 💥 LOVE TAKEOVER -->
+<div id="loveTakeover">
+  <h1>I LOVEEEE YOUUUUU 💖💖💖</h1>
+</div>
 
 /* 📸 SLIDER */
 .slider { position: relative; margin-top: 15px; }
@@ -223,6 +272,7 @@ button {
     <button onclick="show('pics')">📸 Picesss</button>
     <button onclick="show('letter')">💌 Letterrr</button>
     <button onclick="show('future')">🔮 Our Future</button>
+    <button onclick="showExtra()">💞 Something Extra</button>
   </div>
 </div>
 
@@ -407,10 +457,33 @@ function showOnly(id) {
   document.getElementById(id).classList.add('active');
 }
 
+  function showExtra() {
+  showOnly('extraPass');
+}
+
+function checkExtra() {
+  const val = document.getElementById("extraInput").value;
+  const err = document.getElementById("extraError");
+
+  if (val === "210312") {
+    err.textContent = "";
+    showOnly('extraSecret');
+  } else {
+    err.textContent = "NOPE 😠 try again";
+  }
+}
+
+function loveTakeover() {
+  document.querySelectorAll('.card, .section').forEach(el => el.style.display = "none");
+  document.getElementById("loveTakeover").style.display = "flex";
+}
+
+
 </script>
   
 </body>
 </html>
+
 
 
 
