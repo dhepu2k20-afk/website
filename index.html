@@ -40,6 +40,13 @@ body {
   margin: 0 auto 3px;
 }
 
+.introPic {
+  width: 100%;
+  border-radius: 18px;
+  margin-top: 15px;
+  height: 240px;
+  object-fit: cover;
+}
 
 
 .hearts {
@@ -151,6 +158,39 @@ button {
 
 <div class="hearts" id="hearts"></div>
 
+  <!-- 🌸 PRE-QUIZ INTRO -->
+<div id="preIntro" class="section active">
+  <h2>HAIIII i made smt for you do u wanna see 🥺</h2>
+  <img src="images/intro.jpg" class="introPic">
+  <button onclick="introNo()">NO 🙄</button>
+  <button onclick="introYes()">YESSS 💕</button>
+</div>
+
+<div id="introNo" class="section">
+  <h2>HOW DARE YOU 😤</h2>
+  <img src="images/howdareyou.jpg" class="introPic">
+  <button onclick="retryIntro()">Retry 😒</button>
+</div>
+
+<div id="introYes" class="section">
+  <h2>GOOOODDDD 😍</h2>
+  <img src="images/good.jpg" class="introPic">
+  <button onclick="goValentine()">Next 💖</button>
+</div>
+
+<div id="valentinePage" class="section">
+  <h2>WILL YOU BE MY VALENTINE? 💘</h2>
+  <img src="images/valentine.jpg" class="introPic">
+  <button onclick="valentineNo()">NOOO 😤</button>
+  <button onclick="startQuiz()">YESSSSS 🥰</button>
+</div>
+
+<div id="valentineNo" class="section">
+  <h2>WHAT DID U SAYYY 😠</h2>
+  <button onclick="goValentine()">Try Again 😤</button>
+</div>
+
+
 <div class="card">
 <button id="homeBtn" onclick="goHome()">← GO BACK</button>
 
@@ -210,6 +250,45 @@ button {
 </div>.
   </p>
 </div>
+
+  // 🔒 Hide quiz at start
+document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+
+// 🌸 Intro logic
+function introNo() {
+  showOnly('introNo');
+}
+
+function introYes() {
+  showOnly('introYes');
+}
+
+function retryIntro() {
+  showOnly('preIntro');
+}
+
+function goValentine() {
+  showOnly('valentinePage');
+}
+
+function valentineNo() {
+  showOnly('valentineNo');
+}
+
+// 💘 Start quiz for real
+function startQuiz() {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  current = 0;
+  questions[0].classList.add('active');
+  document.body.style.background = backgrounds.quiz;
+}
+
+// Helper
+function showOnly(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
 
 <script>
 const backgrounds = {
@@ -333,6 +412,7 @@ window.addEventListener('mousemove', (e) => {
   
 </body>
 </html>
+
 
 
 
