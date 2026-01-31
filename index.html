@@ -22,7 +22,18 @@ body {
   body.extraOpen h1 {
   display: none;
 }
+  
+h1 {
+  display: none;
+}
+body.showTitle h1 {
+  display: block;
+}
 
+body.extraOpen {
+  background: #ffd6e5 !important; /* soft light pink */
+}
+  
 .watcher {
   position: fixed;
   pointer-events: none;
@@ -209,11 +220,6 @@ button {
   <button onclick="loveTakeover()">Next 💖</button>
 </div>
 
-<!-- 💥 LOVE TAKEOVER -->
-<div id="loveTakeover">
-  <h1>I LOVEEEE YOUUUUU 💖💖💖</h1>
-</div>
-
   
   <!-- 🌸 PRE-QUIZ INTRO -->
 <div id="preIntro" class="section active">
@@ -333,11 +339,13 @@ function next(n) {
 }
 
 function finish() {
+  document.body.classList.add("showTitle"); // ✅ ADD
   questions[current].classList.remove('active');
   end.classList.add('active');
   homeBtn.style.display = 'block';
   document.body.style.background = backgrounds.home;
 }
+
 
 function show(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -451,11 +459,13 @@ function valentineNo() {
 
 // 💘 Start quiz for real
 function startQuiz() {
+  document.body.classList.add("showTitle"); // ✅ ADD
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   current = 0;
   questions[0].classList.add('active');
   document.body.style.background = backgrounds.quiz;
 }
+
 
 // Helper
 function showOnly(id) {
@@ -463,11 +473,11 @@ function showOnly(id) {
   document.getElementById(id).classList.add('active');
 }
 
- function showExtra() {
+function showExtra() {
   document.body.classList.add("extraOpen");
+  document.body.classList.remove("showTitle"); // ✅ hide title here
   showOnly('extraPass');
 }
-
 
 function checkExtra() {
   const val = document.getElementById("extraInput").value;
@@ -481,17 +491,24 @@ function checkExtra() {
   }
 }
 
+
 function loveTakeover() {
-  document.body.classList.remove("extraOpen");
-  document.querySelectorAll('.card, .section').forEach(el => el.style.display = "none");
+  document.body.className = ""; // reset all classes
+  document.querySelectorAll('.card').forEach(el => el.style.display = "none");
   document.getElementById("loveTakeover").style.display = "flex";
 }
 
 
 </script>
+
+  <!-- 💥 LOVE TAKEOVER -->
+<div id="loveTakeover">
+  <h1>I LOVEEEE YOUUUUU 💖💖💖</h1>
+</div>
   
 </body>
 </html>
+
 
 
 
