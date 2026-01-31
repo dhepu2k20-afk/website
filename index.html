@@ -158,6 +158,8 @@ button {
 
 <div class="hearts" id="hearts"></div>
 
+<div class="card">
+
   <!-- 🌸 PRE-QUIZ INTRO -->
 <div id="preIntro" class="section active">
   <h2>HAIIII i made smt for you do u wanna see 🥺</h2>
@@ -190,8 +192,7 @@ button {
   <button onclick="goValentine()">Try Again 😤</button>
 </div>
 
-
-<div class="card">
+  
 <button id="homeBtn" onclick="goHome()">← GO BACK</button>
 
 <h1>Happyyy Valentinesss Dayyyy 💘</h1>
@@ -250,45 +251,6 @@ button {
 </div>.
   </p>
 </div>
-
-  // 🔒 Hide quiz at start
-document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
-
-// 🌸 Intro logic
-function introNo() {
-  showOnly('introNo');
-}
-
-function introYes() {
-  showOnly('introYes');
-}
-
-function retryIntro() {
-  showOnly('preIntro');
-}
-
-function goValentine() {
-  showOnly('valentinePage');
-}
-
-function valentineNo() {
-  showOnly('valentineNo');
-}
-
-// 💘 Start quiz for real
-function startQuiz() {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  current = 0;
-  questions[0].classList.add('active');
-  document.body.style.background = backgrounds.quiz;
-}
-
-// Helper
-function showOnly(id) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
 
 <script>
 const backgrounds = {
@@ -407,13 +369,48 @@ window.addEventListener('mousemove', (e) => {
   watcher.style.top = (e.clientY + offsetY) + 'px';
 });
 
+// 🔒 Hide quiz at start
+document.querySelectorAll('.question').forEach(q => q.classList.remove('active'));
+
+// 🌸 Intro logic
+function introNo() {
+  showOnly('introNo');
+}
+
+function introYes() {
+  showOnly('introYes');
+}
+
+function retryIntro() {
+  showOnly('preIntro');
+}
+
+function goValentine() {
+  showOnly('valentinePage');
+}
+
+function valentineNo() {
+  showOnly('valentineNo');
+}
+
+// 💘 Start quiz for real
+function startQuiz() {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  current = 0;
+  questions[0].classList.add('active');
+  document.body.style.background = backgrounds.quiz;
+}
+
+// Helper
+function showOnly(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
 
 </script>
   
 </body>
 </html>
-
-
 
 
 
