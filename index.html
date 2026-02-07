@@ -191,6 +191,52 @@ button {
 
 .arrow.left { left: -10px; }
 .arrow.right { right: -10px; }
+
+/* 💞 EXTRA FULLSCREEN (NO WHITE CARD) */
+#extraFullscreen {
+  position: fixed;
+  inset: 0;
+  background: #ffd6e5;
+  display: none;
+  z-index: 9998;
+}
+
+#extraFullscreen img {
+  max-width: 90vw;
+  max-height: 80vh;
+  margin: 70px auto 0;
+  display: block;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+#extraBack {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  color: #ff5f8a;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+#extraNext {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #ff5f8a;
+  color: white;
+  border: none;
+  padding: 14px 22px;
+  border-radius: 16px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+  
 </style>
 </head>
 
@@ -495,17 +541,29 @@ function checkExtra() {
 
   if (val === "210312") {
     err.textContent = "";
-    showOnly('extraSecret');
+
+    // hide the white card
+    document.querySelector('.card').style.display = "none";
+
+    // show fullscreen extra page
+    document.getElementById("extraFullscreen").style.display = "block";
   } else {
     err.textContent = "NOPE 😠 try again";
   }
 }
 
 
+
 function loveTakeover() {
   document.body.className = ""; // reset all classes
   document.querySelectorAll('.card').forEach(el => el.style.display = "none");
   document.getElementById("loveTakeover").style.display = "flex";
+}
+
+  function exitExtra() {
+  document.getElementById("extraFullscreen").style.display = "none";
+  document.querySelector('.card').style.display = "block";
+  goHome();
 }
 
 
@@ -515,9 +573,20 @@ function loveTakeover() {
 <div id="loveTakeover">
   <h1>I LOVEEEE YOUUUUU 💖💖💖</h1>
 </div>
+
+<!-- 💞 EXTRA FULLSCREEN PAGE -->
+<div id="extraFullscreen">
+  <button id="extraBack" onclick="exitExtra()">← GO BACK</button>
+
+  <img src="images/extra.jpg">
+
+  <button id="extraNext" onclick="loveTakeover()">NEXT 💖</button>
+</div>
+
   
 </body>
 </html>
+
 
 
 
