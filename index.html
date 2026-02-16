@@ -68,7 +68,8 @@ body.extraOpen {
   inset: 0;
   background: pink;
   display: none;
-  overflow: hidden;
+  justify-content: center;
+  align-items: center;
   z-index: 9999;
 }
 
@@ -190,52 +191,6 @@ button {
 
 .arrow.left { left: -10px; }
 .arrow.right { right: -10px; }
-
-/* 💞 EXTRA FULLSCREEN (NO WHITE CARD) */
-#extraFullscreen {
-  position: fixed;
-  inset: 0;
-  background: #ffd6e5;
-  display: none;
-  z-index: 9998;
-}
-
-#extraFullscreen img {
-  max-width: 90vw;
-  max-height: 80vh;
-  margin: 70px auto 0;
-  display: block;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-}
-
-#extraBack {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background: none;
-  border: none;
-  color: #ff5f8a;
-  font-size: 16px;
-  cursor: pointer;
-  z-index: 10000;
-}
-
-#extraNext {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  background: #ff5f8a;
-  color: white;
-  border: none;
-  padding: 14px 22px;
-  border-radius: 16px;
-  font-size: 16px;
-  cursor: pointer;
-  z-index: 10000;
-}
-
-  
 </style>
 </head>
 
@@ -261,7 +216,7 @@ button {
 
 <!-- 💻 SECRET IMAGE PAGE -->
 <div id="extraSecret" class="section">
-  <img src="images/dhe.jpg" class="laptopPic">
+  <img src="images/extra.jpg" class="laptopPic">
   <button onclick="loveTakeover()">Next 💖</button>
 </div>
 
@@ -540,65 +495,29 @@ function checkExtra() {
 
   if (val === "210312") {
     err.textContent = "";
-
-    // hide the white card
-    document.querySelector('.card').style.display = "none";
-
-    // show fullscreen extra page
-    document.getElementById("extraFullscreen").style.display = "block";
+    showOnly('extraSecret');
   } else {
     err.textContent = "NOPE 😠 try again";
   }
 }
 
 
-
 function loveTakeover() {
-  const takeover = document.getElementById("loveTakeover");
-
-  // hide fullscreen extra page
-  document.getElementById("extraFullscreen").style.display = "none";
-
-  // show takeover container
-  takeover.style.display = "block";
-
-  // prevent duplicate flood if clicked again
-  if (takeover.dataset.flooded === "true") return;
-  takeover.dataset.flooded = "true";
-
-  // clear existing content
-  takeover.innerHTML = "";
-
-  // generate love flood
-  for (let i = 0; i < 120; i++) {
-    const text = document.createElement("div");
-    text.innerText = "I LOVEEE YOUUU 💖";
-    text.style.position = "absolute";
-    text.style.left = Math.random() * 100 + "vw";
-    text.style.top = Math.random() * 100 + "vh";
-    text.style.fontSize = (18 + Math.random() * 45) + "px";
-    text.style.fontWeight = "900";
-    text.style.color = "white";
-    text.style.animation = "pop 0.6s ease-in-out infinite alternate";
-    takeover.appendChild(text);
-  }
+  document.body.className = ""; // reset all classes
+  document.querySelectorAll('.card').forEach(el => el.style.display = "none");
+  document.getElementById("loveTakeover").style.display = "flex";
 }
 
 
-<!-- 💞 EXTRA FULLSCREEN PAGE -->
-<div id="extraFullscreen">
-  <button id="extraBack" onclick="exitExtra()">← GO BACK</button>
+</script>
 
-  <img src="images/dhe.jpg">
-
-  <button id="extraNext" onclick="loveTakeover()">NEXT 💖</button>
+  <!-- 💥 LOVE TAKEOVER -->
+<div id="loveTakeover">
+  <h1>I LOVEEEE YOUUUUU 💖💖💖</h1>
 </div>
-
   
 </body>
 </html>
-
-
 
 
 
